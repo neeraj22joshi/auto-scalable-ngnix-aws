@@ -1,68 +1,53 @@
-# Scalable-Secure-Webapp-AWS
+# Auto-Scalable Web Hosting Platform with Nginx on AWS
 
-Delivered a scalable and secure web application using custom VPC, ALB, Auto Scaling, and AWS WAF/Shield to ensure uptime and protect against threats.
+---
 
-# Architecture Design
-- Implemented a two-tier model:
-- Frontend: EC2 instances in public subnets
-- Backend: Databases/internal services in private subnets
-- Ensured scalability and security using:
-- Auto Scaling for elasticity
-- ALB for traffic distribution
-- AWS WAF/Shield for threat mitigation
-  
-# Custom VPC Configuration
-- Created a VPC with CIDR block 10.0.0.0/16
-- Provisioned:
-- Public subnets for ALB and EC2
-- Private subnets for backend services
-- Configured:
-- Internet Gateway and Route Tables
-- NAT Gateway for outbound traffic from private subnets
+## Project Overview
 
-# EC2 & Auto Scaling Setup
-- Built a Launch Template with AMI, instance type, security groups, and user data
-- Deployed an Auto Scaling Group:
-- Attached to public subnets
-- Defined desired/min/max capacity
-- Implemented scaling policies based on CPU and memory metrics
-- Validated with stress testing
+This project demonstrates how to build a **highly available**, **auto-scalable** web hosting environment on AWS using **Nginx**.  
+It leverages core AWS services including EC2, Auto Scaling Group, Application Load Balancer, and AWS WAF for security.
 
-# Application Load Balancer (ALB)
-- Configured an internet-facing ALB with:
-- HTTP/HTTPS listeners
-- Target groups pointing to EC2 instances
-- Integrated ALB with Auto Scaling Group
-- Enabled health checks for EC2 targets
+---
 
-# AWS WAF & Shield Integration
-- Created a Web ACL with:
-- Managed rules (SQLi, XSS, IP reputation)
-- Custom rules (rate limiting, geo-blocking)
-- Associated Web ACL with ALB
-- Enabled AWS Shield Standard for DDoS protection
-- Evaluated Shield Advanced for enhanced security
+## Repository Structure
 
-# Security Groups & IAM Roles
-- Defined Security Groups:
-- ALB: Allowed inbound HTTP/HTTPS
-- EC2: Allowed traffic only from ALB
-- Assigned IAM Roles:
-- EC2: Access to CloudWatch, S3
-- Auto Scaling: Permissions to manage instances
+<img width="603" height="169" alt="image" src="https://github.com/user-attachments/assets/03501d8b-daef-4ef7-8cd6-f1efb0d1cfee" />
 
-# Monitoring & Optimization
-- Used CloudWatch for:
-- Metrics (CPU, network, request count)
-- Alarms for scaling triggers
-- Enabled WAF logging to S3/Kinesis
-- Monitored Shield metrics for DDoS attempts
+---
 
-# Outcome
-This project demonstrates my ability to architect and deploy production-grade infrastructure on AWS that:
-- Automatically scales with traffic
-- Filters malicious requests
-- Distributes load efficiently
-- Defends against DDoS attacks
+## Key Components
 
+- **Ubuntu EC2 Instance:** Base instance with Nginx installed and configured via user-data script.
+- **Custom AMI:** Created from the configured EC2 instance to ensure consistent deployments.
+- **Launch Template:** Defines instance configurations using the custom AMI.
+- **Auto Scaling Group (ASG):** Automatically scales EC2 instances based on demand.
+- **Application Load Balancer (ALB):** Distributes incoming HTTP/HTTPS traffic to healthy instances.
+- **AWS WAF:** Protects the ALB from malicious traffic and bots.
 
+---
+
+## Quick Start
+
+1. Launch an Ubuntu EC2 instance using the user-data script located at `user-data/nginx-install.sh` to install and configure Nginx automatically.
+2. Create a custom AMI from this instance (`docs/ami-creation.md`).
+3. Configure the Launch Template and Auto Scaling Group with the custom AMI, targeting your desired capacity and scaling policies (`docs/asg-setup.md`).
+4. Set up an Application Load Balancer and integrate it with your ASG (`docs/alb-config.md`).
+5. Enable AWS WAF to secure your environment (`docs/waf-setup.md`).
+6. Access your web application via the ALB DNS name to verify functionality.
+
+---
+
+## User-Data Script (nginx-install.sh)
+
+The user-data script automates the installation and setup of Nginx on an Ubuntu EC2 instance. It:
+
+- Updates package lists and upgrades installed packages.
+- Installs Nginx.
+- Starts and enables Nginx service.
+- Configures the firewall to allow HTTP and HTTPS traffic.
+- Creates a sample web page.
+
+---
+
+Happy scaling with AWS and Nginx! 🚀
+<img width="739" height="1113" alt="image" src="https://github.com/user-attachments/assets/5c96081c-929b-4c7b-b17b-31382d583d4f" />
