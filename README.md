@@ -11,7 +11,7 @@ It leverages core AWS services including EC2, Auto Scaling Group, Application Lo
 
 ## Repository Structure
 
-<img width="603" height="169" alt="image" src="https://github.com/user-attachments/assets/03501d8b-daef-4ef7-8cd6-f1efb0d1cfee" />
+<img width="690" height="261" alt="image" src="https://github.com/user-attachments/assets/f7d58c8d-3cec-40e4-9b08-7a1891ba318f" />
 
 ---
 
